@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class=root>
+    <div class="main">
+      <div class="main-button">
+        <button id="createTeacher">Register Teacher</button>
+        <button id="createClass">Create Class</button>
+        <button id="joinTeacher">Join Class as Teacher</button>
+        <button id="joinStudent">Join Class as Student</button>
+      </div>
+
+      <div class="main-teacher">
+        <div class="main-teacher-header">
+          <h3>Register Teacher</h3>
+        </div>
+        <div class="main-teacher-form">
+          <div>
+            <label>Your name</label>
+            <input type="text" id="userNameT" />
+          </div>
+          <button id="createTeacherBtn">Register</button>
+        </div>
+      </div>
+
+      <div class="main-class">
+        <div class="main-class-header">
+          <h3>Create Class</h3>
+        </div>
+        <div class="main-class-form">
+          <div>
+            <label>Teacher Id</label>
+            <input type="text" id="teacherIdC" />
+          </div>
+          <div>
+            <label>Class name</label>
+            <input type="text" id="classNameC" />
+          </div>
+          <button id="createClassBtn">Create and Join</button>
+        </div>
+      </div>
+
+      <div class="main-join-teacher">
+        <div class="main-join-teacher-header">
+          <h3>Join Class as Teacher</h3>
+        </div>
+        <div class="main-join-teacher-form">
+          <div>
+            <label>Teacher ID</label>
+            <input type="text" id="teacherIdT" />
+          </div>
+          <div>
+            <label>Class ID</label>
+            <input type="text" id="classIdT" />
+          </div>
+          <button id="joinTeacherClassBtn">Join</button>
+        </div>
+      </div>
+
+      <div class="main-join-student">
+        <div class="main-join-student-header">
+          <h3>Join Class as Student</h3>
+        </div>
+        <div class="main-join-student-form">
+          <div>
+            <label>Your name</label>
+            <input type="text" id="userNameJ" />
+          </div>
+          <div>
+            <label>Class ID</label>
+            <input type="text" id="classIdJ" />
+          </div>
+          <button id="joinStudentClassBtn">Join</button>
+        </div>
+      </div>
+
+      <div class="lists">
+        <div class="main-teacher-list">
+          <div class="main-join-header">
+            <h3>Teachers</h3>
+          </div>
+          <div class="main-join-form">
+            <div id="teacherList">
+            </div>
+          </div>
+        </div>
+        <div class="main-class-list">
+          <div class="main-join-header">
+            <h3>Classes</h3>
+          </div>
+          <div class="main-join-form">
+            <div id="classList">
+            </div>
+          </div>
+        </div>
+        <div class="main-join-list">
+          <div class="main-join-header">
+            <h3>Joined</h3>
+          </div>
+          <div class="main-join-form">
+            <div id="joinList">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="/assets/script.js"></script>
+
+</html>

@@ -1,0 +1,40 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main-class, .main-join-teacher, .main-join-student, .main-teacher {
+  display: none;
+}
+.main-class-form, .main-join-form, .main-teacher-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+}
+.root, .lists {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.main-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.main-teacher-list, .main-class-list, .main-join-list {
+  margin-left: 20px;
+  display: none;
+}
+#createTeacher, #createClass, #joinTeacher, #joinStudent {
+  margin-left: 20px;
+}

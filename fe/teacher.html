@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class=root>
+    <div class="main">
+      <div class="main-name" id="teacherName">
+      </div>
+
+      <div class="main-button">
+        <button id="startClass">Start</button>
+        <button id="endClass">End</button>
+      </div>
+
+      <div class="lists">
+        <div class="main-join-list">
+          <div class="main-join-header">
+            <div id="stuCount"><b>Students Joined:</b></div>
+          </div>
+          <div class="main-join-form">
+            <div id="joinList">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="/assets/script.js"></script>
+
+</html>
