@@ -12,7 +12,6 @@ if (pathname == '/' || pathname.indexOf('index.html') > -1) {
   $(function () {
     // socket.emit('message', 'arjun')
 
-
     socket.on('message', function (msg) {
       alert(JSON.stringify(msg))
       // let id = getUrlParameter('userId')
@@ -94,43 +93,43 @@ if (pathname == '/' || pathname.indexOf('index.html') > -1) {
         // $('.main-class-list').show();
       }
     });
-    socket.on('classJoined', function (msg) {
+    socket.on('studentAdded', function (msg) {
       console.log(JSON.stringify(msg))
       if (msg.error) {
         alert(msg.error)
       }
       else {
-        window.location.href = `${window.location.protocol}://${window.location.hostname}/student.html?classId=${msg.id}`
-        let isFirst = true
-        let table = document.createElement("table")
-        for (let c in msg) {
-          if (isFirst) {
-            let header = Object.keys(msg[c])
-            let tr = document.createElement("tr")
-            for (let e of header) {
-              let th = document.createElement("th")
-              th.innerText = e
-              tr.appendChild(th)
-            }
-            table.appendChild(tr)
-            isFirst = false
-          }
-          let tr = document.createElement("tr")
-          for (let ic in msg[c]) {
-            let td = document.createElement("td")
-            if (ic == 'id')
-              td.innerText = c
-            else if (ic == 'studentsJoined')
-              td.innerText = Object.keys(msg[c][ic]).length
-            else
-              td.innerText = msg[c][ic]
-            tr.appendChild(td)
-          }
-          table.appendChild(tr)
-        }
-        console.log(table)
-        $('#teacherList').html(table);
-        $('.main-teacher-list').show();
+        window.location.href = `student.html?classId=${msg.id}`
+        // let isFirst = true
+        // let table = document.createElement("table")
+        // for (let c in msg) {
+        //   if (isFirst) {
+        //     let header = Object.keys(msg[c])
+        //     let tr = document.createElement("tr")
+        //     for (let e of header) {
+        //       let th = document.createElement("th")
+        //       th.innerText = e
+        //       tr.appendChild(th)
+        //     }
+        //     table.appendChild(tr)
+        //     isFirst = false
+        //   }
+        //   let tr = document.createElement("tr")
+        //   for (let ic in msg[c]) {
+        //     let td = document.createElement("td")
+        //     if (ic == 'id')
+        //       td.innerText = c
+        //     else if (ic == 'studentsJoined')
+        //       td.innerText = Object.keys(msg[c][ic]).length
+        //     else
+        //       td.innerText = msg[c][ic]
+        //     tr.appendChild(td)
+        //   }
+        //   table.appendChild(tr)
+        // }
+        // console.log(table)
+        // $('#teacherList').html(table);
+        // $('.main-teacher-list').show();
       }
     });
   });
@@ -329,8 +328,53 @@ else if (pathname.indexOf('teacher.html') > -1) {
     window.location.href = `/`
 }
 else if (pathname.indexOf('student.html') > -1) {
-  socket.emit('listJoinedUsers')
+  // socket.emit('listJoinedUsers')
+  let id = getUrlParameter('classId')
+  console.log('classId', id)
+  if (id) {
+    socket.emit('getClass', id)
+    socket.on('receiveClass', (msg) => {
+      console.log('receiveClass', JSON.stringify(msg))
+      if (msg && msg.id && !msg.isEnded) {
+        $(document).ready(function () {
+          let span = document.createElement("span")
+          span.innerText = Object.keys(msg.studentsJoined).length
+          $('#stuCount').append(span)
+          let table = document.createElement("table")
+          for (let c in msg.studentsJoined) {
+            let tr = document.createElement("tr")
+            for (let ic in msg[c]) {
+              let td = document.createElement("td")
+              if (ic == 'id')
+                td.innerText = c
+              else if (ic == 'studentsJoined')
+                td.innerText = Object.keys(msg[c][ic]).length
+              else
+                td.innerText = msg[c][ic]
+              tr.appendChild(td)
+            }
+            table.appendChild(tr)
+          }
+          console.log(table)
+          let div = document.createElement("div")
+          let b = document.createElement("b")
+          b.innerText = 'Teacher Name:'
+          div.appendChild(b)
+          span = document.createElement("span")
+          span.innerText = msg.teacherId.teacherName
+          div.appendChild(span)
 
+          $('#teacherName').html(div);
+          $('#joinList').html(table);
+          $('.main-join-list').show();
+        })
+      }
+      else
+        window.location.href = `/`
+    })
+  }
+  else
+    window.location.href = `/`
 }
 else if (pathname.indexOf('admin.html') > -1) {
   $(function () {

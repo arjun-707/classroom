@@ -31,7 +31,7 @@ exports.create = (io, socket) => {
     console.log('getClass', id)
 
     let result = getClassId(id)
-
+    console.log('receiveClass', result)
     socket.emit('receiveClass', result);
   });
   socket.on('startClass', (id) => {

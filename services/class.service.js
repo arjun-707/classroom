@@ -19,6 +19,7 @@ const getTeachers = _ => Teachers
 
 const getTeacherById = id => {
   if (id) {
+    console.log('getTeacherById', Teachers[id])
     if (_.has(Teachers, id)) return Teachers[id]
     else return null
   }
@@ -43,6 +44,7 @@ const createClass = (teacherId, className, socketId) => {
       }
       Teachers[teacherId].classId = id
       Teachers[teacherId].isJoined = true
+      console.log('createClass 2', Classes[id])
       return Classes[id]
     }
     return { error: 'teacher already joined in another class'}
@@ -56,8 +58,11 @@ const getClasses = _ => Classes
 const getClassId = id => {
   if (id) {
     if (_.has(Classes, id)) {
-      Classes[id].teacherId = getTeacherById(Classes[id].teacherId)
-      return Classes[id]
+      const newClasses = JSON.parse(JSON.stringify(Classes))
+      console.log('getClassId 1', newClasses)
+      newClasses[id].teacherId = getTeacherById(newClasses[id].teacherId)
+      console.log('getClassId 2', newClasses)
+      return newClasses[id]
     }
     else
       return { error: 'class not found' }
@@ -65,6 +70,7 @@ const getClassId = id => {
   else
     return { error: 'class not found' }
 }
+
 const setClassStart = id => {
   if (id) {
     if (_.has(Classes, id)) {
@@ -78,6 +84,7 @@ const setClassStart = id => {
   else
     return { error: 'class not found' }
 }
+
 const setClassEnd = id => {
   if (id) {
     if (_.has(Classes, id)) {
@@ -93,7 +100,7 @@ const setClassEnd = id => {
 }
 
 const joinClassByTeacher = (teacherId, classId, socketId) => {
-  console.log('joinClass service', studentName, classId, socketId)
+  console.log('joinClass service', teacherId, classId, socketId)
   if (classId) {
     if (_.has(Teachers, teacherId)) {
       console.log('Classes.classId', Classes[classId])
@@ -180,7 +187,9 @@ module.exports = {
   getClassId,
   setClassStart,
   setClassEnd,
-  listJoinedUsers
+  listJoinedUsers,
+  joinClassByTeacher,
+  joinClassByStudent
   // getCurrentUser,
   // userLeave,
   // getRoomUsers

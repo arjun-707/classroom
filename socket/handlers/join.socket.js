@@ -2,7 +2,8 @@ const {
   joinClassByTeacher,
   joinClassByStudent,
   listJoinedUsers,
-  getClasses
+  getClasses,
+  getTeachers
 } = require(root_path('/services/class.service'))
 
 exports.join = (io, socket) => {
@@ -11,10 +12,9 @@ exports.join = (io, socket) => {
 
     console.log('joinClassByTeacher', teacherIdT, classIdT)
 
-    let result = joinClassByTeacher(classIdT, socket.id)
+    let result = joinClassByTeacher(teacherIdT, classIdT, socket.id)
 
-    socket.emit('classAdded', getClasses());
-    socket.emit('teacherAdded', getTeachers());
+    socket.emit('classAdded', result);
   });
 
   socket.on('joinClassByStudent', ({ userNameJ, classIdJ }) => {
@@ -24,8 +24,8 @@ exports.join = (io, socket) => {
     let result = joinClassByStudent(userNameJ, classIdJ, socket.id)
 
     // socket.emit('classJoined', result.error ? result : listJoinedUsers());
-    socket.emit('classAdded', getClasses());
-    socket.emit('teacherAdded', getTeachers());
+    socket.emit('studentAdded', result);
+    // socket.emit('teacherAdded', getTeachers());
   });
 
   socket.on('listJoinedUsers', (id) => {
