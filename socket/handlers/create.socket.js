@@ -26,13 +26,19 @@ exports.create = (io, socket) => {
 
     socket.emit('teacherAdded', result);
   });
-  socket.on('getClass', (id) => {
+  socket.on('getClass', ({id, by}) => {
 
     console.log('getClass', id)
 
     let result = getClassId(id)
-    console.log('receiveClass', result)
-    socket.emit('receiveClass', result);
+    if ('teacher' == by) {
+      socket.emit('receiveTeacherClass', result);
+      console.log('receiveTeacherClass', result)
+    }
+    else {
+      socket.emit('receiveStudentClass', result);
+      console.log('receiveStudentClass', result)
+    }
   });
   socket.on('startClass', (id) => {
 

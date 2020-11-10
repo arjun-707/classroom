@@ -94,7 +94,7 @@ if (pathname == '/' || pathname.indexOf('index.html') > -1) {
       }
     });
     socket.on('studentAdded', function (msg) {
-      console.log(JSON.stringify(msg))
+      console.log('studentAdded -->', JSON.stringify(msg))
       if (msg.error) {
         alert(msg.error)
       }
@@ -263,8 +263,8 @@ else if (pathname.indexOf('teacher.html') > -1) {
   let id = getUrlParameter('classId')
   console.log('classId', id)
   if (id) {
-    socket.emit('getClass', id)
-    socket.on('receiveClass', (msg) => {
+    socket.emit('getClass', { id, by: 'teacher' })
+    socket.on('receiveTeacherClass', (msg) => {
       console.log('receiveClass', JSON.stringify(msg))
       if (msg && msg.id && !msg.isEnded) {
         $(document).ready(function () {
@@ -328,13 +328,14 @@ else if (pathname.indexOf('teacher.html') > -1) {
     window.location.href = `/`
 }
 else if (pathname.indexOf('student.html') > -1) {
+  console.log('student.html-----')
   // socket.emit('listJoinedUsers')
   let id = getUrlParameter('classId')
-  console.log('classId', id)
+  console.log('student classId', id)
   if (id) {
-    socket.emit('getClass', id)
-    socket.on('receiveClass', (msg) => {
-      console.log('receiveClass', JSON.stringify(msg))
+    socket.emit('getClass', {id, by: 'student'})
+    socket.on('receiveStudentClass', (msg) => {
+      console.log('student receiveClass', JSON.stringify(msg))
       if (msg && msg.id && !msg.isEnded) {
         $(document).ready(function () {
           let span = document.createElement("span")

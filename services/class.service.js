@@ -76,7 +76,9 @@ const setClassStart = id => {
     if (_.has(Classes, id)) {
       Classes[id].startTime = +new Date
       Classes[id].isStarted = true
-      return Classes[id]
+      const newClasses = JSON.parse(JSON.stringify(Classes))
+      newClasses[id].teacherId = getTeacherById(newClasses[id].teacherId)
+      return newClasses[id]
     }
     else
       return { error: 'class not found' }
@@ -127,14 +129,17 @@ const joinClassByStudent = (studentName, classId, socketId) => {
     const id = nanoid(6)
     if (_.has(Classes, classId)) {
       console.log('Classes.classId', Classes[classId])
+      if (Classes[classId].isEnded)
+        return { error: 'class already over' }
       if (Classes[classId].isStarted && !_.has(Classes[classId].studentsJoined, id))
-        return { error: 'already started' }
+        return { error: 'class already started' }
       if (!Classes[classId].isStarted && !_.has(Classes[classId].studentsJoined, id)) {
-        return Classes[classId].studentsJoined[id] = {
+        Classes[classId].studentsJoined[id] = {
           studentName,
           createdId: socketId
         }
       }
+      console.log('Classes.classId end ', Classes[classId])
       return Classes[classId]
     }
     else

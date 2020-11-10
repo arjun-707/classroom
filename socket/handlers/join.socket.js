@@ -20,12 +20,11 @@ exports.join = (io, socket) => {
   socket.on('joinClassByStudent', ({ userNameJ, classIdJ }) => {
 
     console.log('joinClassByStudent', userNameJ, classIdJ)
-
+    
     let result = joinClassByStudent(userNameJ, classIdJ, socket.id)
-
-    // socket.emit('classJoined', result.error ? result : listJoinedUsers());
+    
+    console.log('studentAdded', result)
     socket.emit('studentAdded', result);
-    // socket.emit('teacherAdded', getTeachers());
   });
 
   socket.on('listJoinedUsers', (id) => {
